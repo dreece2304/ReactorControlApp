@@ -1,17 +1,10 @@
-from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QLabel, QGridLayout, QTabWidget, QLineEdit, QPushButton, QHBoxLayout, QCheckBox, QSizePolicy, QGroupBox, QSpacerItem
+from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QLabel, QTabWidget, QLineEdit, QPushButton, QGroupBox, \
+    QHBoxLayout, QFormLayout
 from PyQt5.QtCore import QTimer
-from PyQt5.QtGui import QFont
+from .zone_widget import ZoneWidget
+from .zone_tab import ZoneTab
+from controllers.controller import TemperatureController
 
-# Set to True if using Mock controller for testing
-USE_MOCK_CONTROLLER = True
-
-if USE_MOCK_CONTROLLER:
-    from controllers.mock_controller import MockTemperatureController as TemperatureController
-else:
-    from controllers.controller import TemperatureController
-
-from gui.zone_widget import ZoneWidget
-from gui.zone_tab import ZoneTab
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -20,11 +13,8 @@ class MainWindow(QMainWindow):
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
         self.layout = QVBoxLayout(self.central_widget)
-        self.layout.setContentsMargins(10, 10, 10, 10)
-        self.layout.setSpacing(10)
 
         self.header = QLabel("Reactor Temperature Control")
-        self.header.setFont(QFont("Arial", 18, QFont.Bold))
         self.layout.addWidget(self.header)
 
         self.tab_widget = QTabWidget()
@@ -33,8 +23,6 @@ class MainWindow(QMainWindow):
         self.main_tab = QWidget()
         self.tab_widget.addTab(self.main_tab, "Main")
         self.main_layout = QVBoxLayout(self.main_tab)
-        self.main_layout.setContentsMargins(10, 10, 10, 10)
-        self.main_layout.setSpacing(10)
 
         self.interval_group = QGroupBox("Update Interval")
         self.interval_layout = QHBoxLayout()
@@ -49,30 +37,43 @@ class MainWindow(QMainWindow):
         self.interval_group.setLayout(self.interval_layout)
         self.main_layout.addWidget(self.interval_group)
 
-        self.controller = TemperatureController('COM3', 1)
-        addresses = [40257, 40259, 40261, 40263, 40265, 40267]  # Example addresses for 6 zones
-
-        self.zones = [ZoneWidget(f"Zone {i+1}", self.controller, addresses[i]) for i in range(6)]
+        self.device_id_label = QLabel("Device ID: N/A")
+        self.main_layout.addWidget(self.device_id_label)
 
         self.zones_group = QGroupBox("Zones Status")
-        self.zones_layout = QGridLayout()
-        for i, zone in enumerate(self.zones):
-            label = QLabel(f"Zone {i+1}")
-            setpoint_label = QLabel("Setpoint (°C):")
-            status_label = QLabel("Status:")
-            self.zones_layout.addWidget(label, i, 0)
-            self.zones_layout.addWidget(zone.show_checkbox, i, 1)
-            self.zones_layout.addWidget(zone.temp_display, i, 2)
-            self.zones_layout.addWidget(setpoint_label, i, 3)
-            self.zones_layout.addWidget(zone.setpoint_input, i, 4)
-            self.zones_layout.addWidget(status_label, i, 5)
-            self.zones_layout.addWidget(zone.status_display, i, 6)
-        self.zones_group.setLayout(self.zones_layout)
+        self.zones_form_layout = QFormLayout()
+        self.zones_group.setLayout(self.zones_form_layout)
         self.main_layout.addWidget(self.zones_group)
 
-        for i, zone in enumerate(self.zones):
+        self.controller_port = "COM3"
+        self.slave_address = 1
+        self.baudrate = 115200
+        self.zones_per_controller = 6
+
+        # Initialize controller
+        self.controller = TemperatureController(self.controller_port, self.slave_address, self.baudrate)
+
+        # Read and display the device ID
+        self.display_device_id()
+
+        # Add zones with correct register addresses
+        self.zones = []
+        for i in range(self.zones_per_controller):
+            temperature_register = 40257 + i
+            status_register = 40385 + i
+            zone = ZoneWidget(f"Zone {i + 1}", self.controller, temperature_register, status_register)
+            self.zones.append(zone)
+            self.zones_form_layout.addRow(zone.zone_label, zone)
+
+        # Add a single "Read Temperature" button for all zones
+        self.read_all_button = QPushButton("Read All Temperatures")
+        self.read_all_button.clicked.connect(self.update_all_temperatures)
+        self.main_layout.addWidget(self.read_all_button)
+
+        # Add zone tabs with graphs
+        for zone in self.zones:
             zone_tab = ZoneTab(zone)
-            self.tab_widget.addTab(zone_tab, f"Zone {i+1}")
+            self.tab_widget.addTab(zone_tab, zone.zone_label.text())
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_all_temperatures)
@@ -86,3 +87,10 @@ class MainWindow(QMainWindow):
         for zone in self.zones:
             if zone.show_checkbox.isChecked():
                 zone.update_temperature()
+
+    def display_device_id(self):
+        device_id = self.controller.read_device_id()
+        if device_id is not None:
+            self.device_id_label.setText(f"Device ID: {device_id}")
+        else:
+            self.device_id_label.setText("Device ID: Error")

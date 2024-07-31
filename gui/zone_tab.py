@@ -37,7 +37,7 @@ class ZoneTab(QWidget):
         self.y_max = 200
 
     def update_graph(self):
-        temp = self.zone_widget.controller.read_float(self.zone_widget.address)
+        temp = self.zone_widget.controller.read_float(self.zone_widget.temperature_register)
         if temp is not None:
             self.times.append(datetime.datetime.now())
             self.temperatures.append(temp)
