@@ -1,0 +1,50 @@
+{
+    "Alarm Modes": {
+        "0": "HI_LO_ALARM",
+        "1": "OFF_ALARM",
+        "2": "ON_ALARM",
+        "3": "DISABLE",
+        "4": "ENABLE",
+        "5": "STATUS_OK",
+        "6": "STATUS_ALARM",
+        "7": "ALARM_OFF",
+        "8": "ALARM_ON",
+        "9": "ALARM_LATCHED"
+    },
+    "Temperature Units": {
+        "0": "DEGREE_F",
+        "1": "DEGREE_C",
+        "2": "HI_ALARM",
+        "3": "LO_ALARM",
+        "4": "PID_CONTROL",
+        "5": "ON_OFF_CONTROL"
+    },
+    "Sensor Types": {
+        "0": "TC",
+        "1": "RTD",
+        "2": "THERMOCOUPLE",
+        "3": "THERMISTOR",
+        "4": "ANALOG_VOLTAGE",
+        "5": "ANALOG_CURRENT",
+        "6": "TBD",
+        "7": "TBD",
+        "8": "TBD",
+        "9": "TBD"
+    },
+    "Control States": {
+        "0": "DISABLE",
+        "1": "ACTION_REVERSE",
+        "2": "ON_OFF_CONTROL",
+        "3": "PID_CONTROL",
+        "4": "HI_LO_ALARM",
+        "5": "ALARM_NONE",
+        "6": "ALARM_OFF",
+        "7": "ALARM_ON",
+        "8": "ENABLE",
+        "9": "STATUS_STOPPED",
+        "10": "STATUS_RUNNING",
+        "11": "STATUS_ALARM",
+        "12": "STATUS_IDLE",
+        "13": "STATUS_DONE"
+    }
+}

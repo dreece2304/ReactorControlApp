@@ -2,16 +2,16 @@ from utils.modbus_communication import ModbusCommunication
 
 
 class TemperatureController:
-    def __init__(self, ports, device_ids):
-        self.comm = ModbusCommunication(ports, device_ids=device_ids)
-        self.device_names = {device_id: f"Device {device_id}" for device_id in device_ids}
+    def __init__(self, port, device_ids, json_file='OMEGA_CN616A_Registers.json'):
+        self.comm = ModbusCommunication(port, device_ids=device_ids, json_file=json_file)
 
-    def get_temperature(self, device_id):
-        return self.comm.read_temperature(device_id, register=0)  # assuming register 0 for temperature
+    def read_temperature(self, device_id, zone):
+        register_name = f'Temperature Zone {zone}'
+        return self.comm.read_register(device_id, register_name, 'Temperature Registers Table')
 
-    def set_device_name(self, device_id, name):
-        if device_id in self.device_names:
-            self.device_names[device_id] = name
+    def set_temperature_setpoint(self, device_id, zone, value):
+        register_name = f'Setpoint Zone {zone}'
+        self.comm.write_register(device_id, register_name, 'Zone Registers Table', value)
 
-    def get_device_name(self, device_id):
-        return self.device_names.get(device_id, "Unknown Device")
+    def enable_all_zones(self, device_id):
+        self.comm.enable_all_zones(device_id)
