@@ -2,7 +2,7 @@ import minimalmodbus
 import serial
 
 # Initialize the Modbus connection to the USB converter
-port = 'COM3'  # Change this to your actual COM port
+port = 'COM5'  # Change this to your actual COM port
 baudrate = 115200  # Make sure this matches your device settings
 
 
@@ -30,3 +30,6 @@ read_register(1, 10)  # Register 40011 corresponds to 10 in 0-based indexing
 
 # Test communication with device 2 (address 2) at register 40011
 read_register(2, 10)  # Register 40011 corresponds to 10 in 0-based indexing
+
+# Test communication with device 3 (address 3) at register 40011
+read_register(3, 10)  # Register 40011 corresponds to 10 in 0-based indexing
