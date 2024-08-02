@@ -5,7 +5,7 @@ import os
 
 class ModbusCommunication:
     def __init__(self, port='COM5', baudrate=115200, device_ids=[1],
-                 json_file='C:/Users/bergsman_lab_admin/PycharmProjects/ReactorControlApp/OMEGA_CN616A_Temperature_and_Zone_Registers.json'):
+                 json_file='C:/Users/bergsman_lab_admin/PycharmProjects/ReactorControlApp/OMEGA_CN616A_Registers.json'):
         self.devices = {}
         self.load_registers(json_file)
         for device_id in device_ids:
@@ -28,23 +28,21 @@ class ModbusCommunication:
 
         for reg in register_info:
             if reg['Mnemonic'] == register_name:
-                register_address = int(reg['Index'], 16)
+                register_address = int(reg['Index'], 16) + 1  # Adjust index for Modbus
                 self.devices[device_id].write_register(register_address, value, functioncode=16)
                 return
         raise ValueError(f"Register '{register_name}' not found in '{register_type}'.")
 
 
-# Main function to reset the device to factory default
 def reset_device_to_factory_default():
     port = 'COM5'
     device_id = 1
-    json_file = 'C:/Users/bergsman_lab_admin/PycharmProjects/ReactorControlApp/OMEGA_CN616A_Temperature_and_Zone_Registers.json'
+    json_file = 'C:/Users/bergsman_lab_admin/PycharmProjects/ReactorControlApp/OMEGA_CN616A_Registers.json'
     modbus_comm = ModbusCommunication(port=port, device_ids=[device_id], json_file=json_file)
 
     # Reset the device to factory default
     try:
-        modbus_comm.write_register(device_id, 'Factory Default', 'Zone Registers Table',
-                                   1)  # Assuming 1 triggers the reset
+        modbus_comm.write_register(device_id, 'Factory Default', 'System Registers', 1)  # Assuming 1 triggers the reset
         print(f"Device {device_id} has been reset to factory default.")
     except Exception as e:
         print(f"Error resetting device {device_id} to factory default: {e}")
