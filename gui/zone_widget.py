@@ -1,4 +1,5 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QTimer
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
+from PyQt5.QtCore import QTimer
 
 class ZoneWidget(QWidget):
     def __init__(self, device_id, controller, decimal_points=2, parent=None):
