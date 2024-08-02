@@ -2,10 +2,8 @@ import minimalmodbus
 import json
 import os
 
-
 class ModbusCommunication:
-    def __init__(self, port='COM5', baudrate=115200, device_ids=[1, 2, 3],
-                 json_file='C:/Users/bergsman_lab_admin/PycharmProjects/ReactorControlApp/OMEGA_CN616A_Registers.json'):
+    def __init__(self, port='COM5', baudrate=115200, device_ids=[1, 2, 3], json_file='C:/Users/bergsman_lab_admin/PycharmProjects/ReactorControlApp/OMEGA_CN616A_Registers.json'):
         self.devices = {}
         self.load_registers(json_file)
         for device_id in device_ids:
@@ -21,20 +19,9 @@ class ModbusCommunication:
             self.registers = json.load(file)
         print(f"Loaded registers: {self.registers.keys()}")  # Debugging output
 
-    def read_register(self, device_id, register_name, register_type):
-        register_info = self.registers.get(register_type)
-        if not register_info:
-            raise ValueError(f"Register type '{register_type}' not found in the JSON file.")
-
-        register_addresses = []
-        for reg in register_info:
-            if reg['Mnemonic'] == register_name:
-                register_addresses.append(int(reg['Index'], 16) + 1)  # Adding 1 to adjust the index for Modbus
-
-        if len(register_addresses) != 2:
-            raise ValueError(f"Expected 2 registers for {register_name}, but found {len(register_addresses)}")
-
-        values = [self.devices[device_id].read_register(addr, functioncode=3, signed=False) for addr in
-                  register_addresses]
-        combined_value = (values[0] << 16) | values[1]
+    def read_temperature_registers(self, device_id, base_register):
+        # Read two consecutive 16-bit registers and combine them into a 32-bit value
+        msb_value = self.devices[device_id].read_register(base_register + 1, functioncode=3, signed=False)
+        lsb_value = self.devices[device_id].read_register(base_register + 2, functioncode=3, signed=False)
+        combined_value = (msb_value << 16) | lsb_value
         return combined_value

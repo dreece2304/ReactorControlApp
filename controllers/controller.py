@@ -5,8 +5,5 @@ class TemperatureController:
         self.comm = ModbusCommunication(port, device_ids=device_ids, json_file=json_file)
 
     def read_temperature(self, device_id, zone):
-        register_names = [f'Temperature Zone {2 * zone - 1}', f'Temperature Zone {2 * zone}']
-        temperature = 0
-        for register_name in register_names:
-            temperature = (temperature << 16) | self.comm.read_register(device_id, register_name, 'Temperature Registers')
-        return temperature
+        base_register = 0x0100 + (zone - 1) * 2  # Calculate the base register for the zone
+        return self.comm.read_temperature_registers(device_id, base_register)
