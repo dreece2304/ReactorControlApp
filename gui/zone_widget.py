@@ -2,10 +2,11 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
 from PyQt5.QtCore import QTimer
 
 class ZoneWidget(QWidget):
-    def __init__(self, device_id, controller, decimal_points=2, parent=None):
+    def __init__(self, device_id, controller, zone_names, decimal_points=2, parent=None):
         super(ZoneWidget, self).__init__(parent)
         self.device_id = device_id
         self.controller = controller
+        self.zone_names = zone_names
         self.decimal_points = decimal_points
 
         self.layout = QVBoxLayout()
@@ -15,7 +16,7 @@ class ZoneWidget(QWidget):
 
         self.zone_labels = []
         for zone in range(6):  # Assuming each device has 6 zones
-            zone_label = QLabel(f"Zone {zone + 1}: Temperature: N/A")
+            zone_label = QLabel(f"{self.zone_names[zone]}: Temperature: N/A °C")
             self.layout.addWidget(zone_label)
             self.zone_labels.append(zone_label)
 
@@ -30,7 +31,7 @@ class ZoneWidget(QWidget):
         for zone in range(6):
             try:
                 temperature = self.controller.read_temperature(self.device_id, zone + 1)  # Zones are 1-indexed
-                temperature_formatted = f"{temperature:.{self.decimal_points}f}"  # Format to specified decimal places
+                temperature_formatted = f"{temperature:.{self.decimal_points}f} °C"  # Format to specified decimal places
             except Exception as e:
                 temperature_formatted = f"Error: {e}"
-            self.zone_labels[zone].setText(f"Zone {zone + 1}: Temperature: {temperature_formatted}")
+            self.zone_labels[zone].setText(f"{self.zone_names[zone]}: Temperature: {temperature_formatted}")
