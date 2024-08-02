@@ -21,20 +21,20 @@ class ModbusCommunication:
             self.registers = json.load(file)
         print(f"Loaded registers: {self.registers.keys()}")  # Debugging output
 
-    def read_registers(self, device_id, register_name, register_type):
+    def read_register(self, device_id, register_name, register_type):
         register_info = self.registers.get(register_type)
         if not register_info:
             raise ValueError(f"Register type '{register_type}' not found in the JSON file.")
 
-        registers_to_read = []
+        register_addresses = []
         for reg in register_info:
             if reg['Mnemonic'] == register_name:
-                registers_to_read.append(int(reg['Index'], 16))
+                register_addresses.append(int(reg['Index'], 16) + 1)  # Adding 1 to adjust the index for Modbus
 
-        if len(registers_to_read) != 2:
-            raise ValueError(f"Expected 2 registers for {register_name}, but found {len(registers_to_read)}")
+        if len(register_addresses) != 2:
+            raise ValueError(f"Expected 2 registers for {register_name}, but found {len(register_addresses)}")
 
         values = [self.devices[device_id].read_register(addr, functioncode=3, signed=False) for addr in
-                  registers_to_read]
+                  register_addresses]
         combined_value = (values[0] << 16) | values[1]
         return combined_value
