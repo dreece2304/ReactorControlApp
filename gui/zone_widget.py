@@ -1,5 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton
-from PyQt5.QtCore import QTimer
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QTimer
 
 class ZoneWidget(QWidget):
     def __init__(self, device_id, controller, decimal_points=2, parent=None):
@@ -19,11 +18,6 @@ class ZoneWidget(QWidget):
             self.layout.addWidget(zone_label)
             self.zone_labels.append(zone_label)
 
-        # Add the "Enable All Zones" button
-        self.enable_button = QPushButton("Enable All Zones")
-        self.enable_button.clicked.connect(self.enable_all_zones)
-        self.layout.addWidget(self.enable_button)
-
         self.setLayout(self.layout)
 
         # Set up a timer to update the temperatures every 5 seconds
@@ -39,10 +33,3 @@ class ZoneWidget(QWidget):
             except Exception as e:
                 temperature_formatted = f"Error: {e}"
             self.zone_labels[zone].setText(f"Zone {zone + 1}: Temperature: {temperature_formatted}")
-
-    def enable_all_zones(self):
-        try:
-            self.controller.enable_all_zones(self.device_id)
-            print(f"All zones enabled for device {self.device_id}")
-        except Exception as e:
-            print(f"Error enabling all zones for device {self.device_id}: {e}")
