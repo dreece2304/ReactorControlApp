@@ -6,8 +6,10 @@ import os
 class ModbusCommunication:
     def __init__(self, port='COM5', baudrate=115200, device_ids=[1, 2, 3],
                  json_file='OMEGA_CN616A_Registers_Corrected.json'):
+        # Ensure the path is correct
+        json_file_path = os.path.join(os.path.dirname(__file__), '..', json_file)
         self.devices = {}
-        self.load_registers(json_file)
+        self.load_registers(json_file_path)
         for device_id in device_ids:
             instrument = minimalmodbus.Instrument(port, device_id)
             instrument.serial.baudrate = baudrate
