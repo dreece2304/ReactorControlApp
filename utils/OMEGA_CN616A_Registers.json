@@ -1,0 +1,903 @@
+{
+    "Data Info": [
+        {
+            "Data Type": "Boolean",
+            "# of Registers": "1",
+            "Byte 0": "--",
+            "Byte 1": "LSB",
+            "Byte 2": "nan",
+            "Byte 3": "nan",
+            "Description": "Zero = OFF, non-zero = ON"
+        },
+        {
+            "Data Type": "Byte/Char",
+            "# of Registers": "1",
+            "Byte 0": "--",
+            "Byte 1": "LSB",
+            "Byte 2": "nan",
+            "Byte 3": "nan",
+            "Description": "Entity contained in LSB of register, Byte 0 ignored."
+        },
+        {
+            "Data Type": "Int16/uint16",
+            "# of Registers": "1",
+            "Byte 0": "MSB",
+            "Byte 1": "LSB",
+            "Byte 2": "nan",
+            "Byte 3": "nan",
+            "Description": "Entity contained in MSB/LSB of register."
+        },
+        {
+            "Data Type": "Int32/uint32",
+            "# of Registers": "2",
+            "Byte 0": "MSB",
+            "Byte 1": "B-1",
+            "Byte 2": "B-2",
+            "Byte 3": "LSB",
+            "Description": "Requires 2 consecutive registers,\nMSB transferred first"
+        },
+        {
+            "Data Type": "float",
+            "# of Registers": "2",
+            "Byte 0": "Sign+\nExp",
+            "Byte 1": "Mantisa\nMSB",
+            "Byte 2": "B-1",
+            "Byte 3": "Mantisa\nLSB",
+            "Description": "IEEE formatted value contained in 2\nconsecutive register"
+        }
+    ],
+    "System Registers": [
+        {
+            "Index": "0x0000",
+            "Mnemonic": "Reserved",
+            "Type": "R",
+            "Access": "---",
+            "Default": "---",
+            "Description": "nan"
+        },
+        {
+            "Index": "0x0001",
+            "Mnemonic": "Device Description",
+            "Type": "R",
+            "Access": "---",
+            "Default": "---",
+            "Description": "Device description"
+        },
+        {
+            "Index": "0x0002",
+            "Mnemonic": "FW Version Major",
+            "Type": "R",
+            "Access": "---",
+            "Default": "---",
+            "Description": "First two octets of Firmware Version"
+        },
+        {
+            "Index": "0x0003",
+            "Mnemonic": "FW Version Minor",
+            "Type": "R",
+            "Access": "---",
+            "Default": "---",
+            "Description": "Last two octets of Firmware Version"
+        },
+        {
+            "Index": "0x0004",
+            "Mnemonic": "Reserved",
+            "Type": "R",
+            "Access": "---",
+            "Default": "---",
+            "Description": "nan"
+        },
+        {
+            "Index": "0x0005",
+            "Mnemonic": "Max Zones",
+            "Type": "R",
+            "Access": "2024-12-06 00:00:00",
+            "Default": "2024-12-06 00:00:00",
+            "Description": "Max zones supported by device"
+        },
+        {
+            "Index": "0x0006",
+            "Mnemonic": "Temperature Scale",
+            "Type": "RW",
+            "Access": "DEGREE_C",
+            "Default": "DEGREE_C",
+            "Description": "Select Fahrenheit or Celsius degree"
+        },
+        {
+            "Index": "0x0007",
+            "Mnemonic": "Sensor Type",
+            "Type": "RW",
+            "Access": "TC",
+            "Default": "TC",
+            "Description": "Enumerated sensor type"
+        },
+        {
+            "Index": "0x0008",
+            "Mnemonic": "Sensor Subtype",
+            "Type": "RW",
+            "Access": "TYPE_K",
+            "Default": "TYPE_K",
+            "Description": "Enumerated sensor sub-type"
+        },
+        {
+            "Index": "0x0009",
+            "Mnemonic": "Password",
+            "Type": "RW",
+            "Access": "1011",
+            "Default": "1011",
+            "Description": "Password"
+        },
+        {
+            "Index": "0x000a",
+            "Mnemonic": "Modbus Address",
+            "Type": "RW",
+            "Access": "1",
+            "Default": "1",
+            "Description": "Device address on the bus"
+        },
+        {
+            "Index": "0x000b",
+            "Mnemonic": "Scan Time Second",
+            "Type": "RW",
+            "Access": "3",
+            "Default": "3",
+            "Description": "Display time per zone in seconds"
+        },
+        {
+            "Index": "0x000c",
+            "Mnemonic": "Active Zone",
+            "Type": "RW",
+            "Access": "0xFFF",
+            "Default": "0xFFF",
+            "Description": "Bitmap of currently active zone"
+        },
+        {
+            "Index": "0x000d",
+            "Mnemonic": "Reserved",
+            "Type": "R",
+            "Access": "---",
+            "Default": "---",
+            "Description": "nan"
+        },
+        {
+            "Index": "0x0013",
+            "Mnemonic": "Factory Default",
+            "Type": "RW",
+            "Access": "---",
+            "Default": "---",
+            "Description": "Reset device to factory default"
+        },
+        {
+            "Index": "0x0015",
+            "Mnemonic": "System State",
+            "Type": "RW",
+            "Access": "SYSTEM_IDLE",
+            "Default": "SYSTEM_IDLE",
+            "Description": "Enumerated system state"
+        },
+        {
+            "Index": "0x0016",
+            "Mnemonic": "Startup State",
+            "Type": "RW",
+            "Access": "SYSTEM_RUN",
+            "Default": "SYSTEM_RUN",
+            "Description": "Enumerated system state"
+        },
+        {
+            "Index": "0x0018",
+            "Mnemonic": "System Alarm Type",
+            "Type": "RW",
+            "Access": "HI_LO_ALARM",
+            "Default": "HI_LO_ALARM",
+            "Description": "Enumerated alarm type"
+        },
+        {
+            "Index": "0x0019",
+            "Mnemonic": "System Alarm Latch",
+            "Type": "RW",
+            "Access": "DISABLE",
+            "Default": "DISABLE",
+            "Description": "Enumerated setting toggle"
+        },
+        {
+            "Index": "0x001a",
+            "Mnemonic": "Password Enable",
+            "Type": "RW",
+            "Access": "DISABLE",
+            "Default": "DISABLE",
+            "Description": "Enumerated toggle setting"
+        },
+        {
+            "Index": "0x001b",
+            "Mnemonic": "Decimal Point",
+            "Type": "RW",
+            "Access": "0",
+            "Default": "0",
+            "Description": "Decimal points displayed (mA/mV Only)"
+        }
+    ],
+    "Temperature Registers": [
+        {
+            "Index": "0x0100",
+            "Mnemonic": "Temperature Zone 1",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 1 Process Value"
+        },
+        {
+            "Index": "0x0102",
+            "Mnemonic": "Temperature Zone 2",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 2 Process Value"
+        },
+        {
+            "Index": "0x0104",
+            "Mnemonic": "Temperature Zone 3",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 3 Process Value"
+        },
+        {
+            "Index": "0x0106",
+            "Mnemonic": "Temperature Zone 4",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 4 Process Value"
+        },
+        {
+            "Index": "0x0108",
+            "Mnemonic": "Temperature Zone 5",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 5 Process Value"
+        },
+        {
+            "Index": "0x010a",
+            "Mnemonic": "Temperature Zone 6",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 6 Process Value"
+        },
+        {
+            "Index": "0x010c",
+            "Mnemonic": "Temperature Zone 7",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 7 Process Value"
+        },
+        {
+            "Index": "0x010e",
+            "Mnemonic": "Temperature Zone 8",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 8 Process Value"
+        },
+        {
+            "Index": "0x0110",
+            "Mnemonic": "Temperature Zone 9",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 9 Process Value"
+        },
+        {
+            "Index": "0x0112",
+            "Mnemonic": "Temperature Zone 10",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 10 Process Value"
+        },
+        {
+            "Index": "0x0114",
+            "Mnemonic": "Temperature Zone 11",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 11 Process Value"
+        },
+        {
+            "Index": "0x0116",
+            "Mnemonic": "Temperature Zone 12",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 12 Process Value"
+        }
+    ],
+    "Sensor Status Registers": [
+        {
+            "Index": "0x0180",
+            "Mnemonic": "Sensor Status Zone 1",
+            "Type": "R",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 1 Sensor status"
+        },
+        {
+            "Index": "0x0181",
+            "Mnemonic": "Sensor Status Zone 2",
+            "Type": "R",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 2 Sensor status"
+        },
+        {
+            "Index": "0x0182",
+            "Mnemonic": "Sensor Status Zone 3",
+            "Type": "R",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 3 Sensor status"
+        },
+        {
+            "Index": "0x0183",
+            "Mnemonic": "Sensor Status Zone 4",
+            "Type": "R",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 4 Sensor status"
+        },
+        {
+            "Index": "0x0184",
+            "Mnemonic": "Sensor Status Zone 5",
+            "Type": "R",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 5 Sensor status"
+        },
+        {
+            "Index": "0x0185",
+            "Mnemonic": "Sensor Status Zone 6",
+            "Type": "R",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 6 Sensor status"
+        },
+        {
+            "Index": "0x0186",
+            "Mnemonic": "Sensor Status Zone 7",
+            "Type": "R",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 7 Sensor status"
+        },
+        {
+            "Index": "0x0187",
+            "Mnemonic": "Sensor Status Zone 8",
+            "Type": "R",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 8 Sensor status"
+        },
+        {
+            "Index": "0x0188",
+            "Mnemonic": "Sensor Status Zone 9",
+            "Type": "R",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 9 Sensor status"
+        },
+        {
+            "Index": "0x0189",
+            "Mnemonic": "Sensor Status Zone 10",
+            "Type": "R",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 10 Sensor status"
+        },
+        {
+            "Index": "0x018a",
+            "Mnemonic": "Sensor Status Zone 11",
+            "Type": "R",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 11 Sensor status"
+        },
+        {
+            "Index": "0x018b",
+            "Mnemonic": "Sensor Status Zone 12",
+            "Type": "R",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 12 Sensor status"
+        },
+        {
+            "Index": "0x018c",
+            "Mnemonic": "Sensor Status Bitmap",
+            "Type": "R",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Sensor status bitmap for all zones"
+        },
+        {
+            "Index": "0x018d",
+            "Mnemonic": "Alarm Status Bitmap",
+            "Type": "R",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Alarm status bitmap for all zones"
+        }
+    ],
+    "Zone Registers": [
+        {
+            "Index": "Base + 0x00",
+            "Mnemonic": "Setpoint High",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "9000",
+            "Description": "Setpoint High for alarm"
+        },
+        {
+            "Index": "Base + 0x02",
+            "Mnemonic": "Setpoint Low",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "-900",
+            "Description": "Setpoint Low for alarm"
+        },
+        {
+            "Index": "Base + 0x04",
+            "Mnemonic": "Alarm 1 Mode",
+            "Type": "R",
+            "Access": "RW",
+            "Default": "HI_LO_ALARM",
+            "Description": "Enumerated alarm mode"
+        },
+        {
+            "Index": "Base + 0x05",
+            "Mnemonic": "Alarm 1 Latch",
+            "Type": "R",
+            "Access": "RW",
+            "Default": "ENABLE",
+            "Description": "Enumerated setting toggle"
+        },
+        {
+            "Index": "Base + 0x06",
+            "Mnemonic": "Alarm 1 Status",
+            "Type": "R",
+            "Access": "RW",
+            "Default": "ALARM_NONE",
+            "Description": "Enumerated alarm status"
+        },
+        {
+            "Index": "Base + 0x07",
+            "Mnemonic": "Alarm 2 Mode",
+            "Type": "R",
+            "Access": "RW",
+            "Default": "ALARM_OFF",
+            "Description": "Enumerated alarm mode"
+        },
+        {
+            "Index": "Base + 0x08",
+            "Mnemonic": "Alarm 2 Latch",
+            "Type": "R",
+            "Access": "RW",
+            "Default": "ENABLE",
+            "Description": "Enumerated setting toggle"
+        },
+        {
+            "Index": "Base + 0x09",
+            "Mnemonic": "Alarm 2 Status",
+            "Type": "R",
+            "Access": "RW",
+            "Default": "ALARM_NONE",
+            "Description": "Enumerated alarm status"
+        },
+        {
+            "Index": "Base + 0x0a",
+            "Mnemonic": "Current Scale High",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "20",
+            "Description": "High scale reading for current input"
+        },
+        {
+            "Index": "Base + 0x0c",
+            "Mnemonic": "Current Scale Low",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "4",
+            "Description": "Low scale reading for current input"
+        },
+        {
+            "Index": "Base + 0x0e",
+            "Mnemonic": "Voltage Scale High",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "1000",
+            "Description": "High scale reading for voltage input"
+        },
+        {
+            "Index": "Base + 0x10",
+            "Mnemonic": "Voltage Scale Low",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Low scale reading for voltage input"
+        }
+    ],
+    "User Calibrations": [
+        {
+            "Index": "0x1d7c",
+            "Mnemonic": "Zone 1 RTD offset",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Offset Ohm for Zone 1"
+        },
+        {
+            "Index": "0x1d7e",
+            "Mnemonic": "Zone 2 RTD offset",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Offset Ohm for Zone 2"
+        },
+        {
+            "Index": "0x1d80",
+            "Mnemonic": "Zone 3 RTD offset",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Offset Ohm for Zone 3"
+        },
+        {
+            "Index": "0x1d82",
+            "Mnemonic": "Zone 4 RTD offset",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Offset Ohm for Zone 4"
+        },
+        {
+            "Index": "0x1d84",
+            "Mnemonic": "Zone 5 RTD offset",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Offset Ohm for Zone 5"
+        },
+        {
+            "Index": "0x1d86",
+            "Mnemonic": "Zone 6 RTD offset",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Offset Ohm for Zone 6"
+        },
+        {
+            "Index": "0x1d88",
+            "Mnemonic": "Zone 7 RTD offset",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Offset Ohm for Zone 7"
+        },
+        {
+            "Index": "0x1d8a",
+            "Mnemonic": "Zone 8 RTD offset",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Offset Ohm for Zone 8"
+        },
+        {
+            "Index": "0x1d8c",
+            "Mnemonic": "Zone 9 RTD offset",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Offset Ohm for Zone 9"
+        },
+        {
+            "Index": "0x1d8e",
+            "Mnemonic": "Zone 10 RTD offset",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Offset Ohm for Zone 10"
+        },
+        {
+            "Index": "0x1d90",
+            "Mnemonic": "Zone 11 RTD offset",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Offset Ohm for Zone 11"
+        },
+        {
+            "Index": "0x1d92",
+            "Mnemonic": "Zone 12 RTD offset",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Offset Ohm for Zone 12"
+        }
+    ],
+    "PID Registers": [
+        {
+            "Index": "Base + 0x00",
+            "Mnemonic": "Start Profile",
+            "Type": "R",
+            "Access": "DISABLE",
+            "Default": "DISABLE",
+            "Description": "Start profile"
+        },
+        {
+            "Index": "Base + 0x01",
+            "Mnemonic": "Control Action",
+            "Type": "RW",
+            "Access": "ACTION_REVERSE",
+            "Default": "ACTION_REVERSE",
+            "Description": "Control action"
+        },
+        {
+            "Index": "Base + 0x02",
+            "Mnemonic": "Control Method",
+            "Type": "RW",
+            "Access": "ON_OFF_CONTROL",
+            "Default": "ON_OFF_CONTROL",
+            "Description": "Control method"
+        },
+        {
+            "Index": "Base + 0x03",
+            "Mnemonic": "Number of Segments",
+            "Type": "RW",
+            "Access": "1",
+            "Default": "1",
+            "Description": "Number of segments"
+        },
+        {
+            "Index": "Base + 0x04",
+            "Mnemonic": "Current Segment Index",
+            "Type": "R",
+            "Access": "0",
+            "Default": "0",
+            "Description": "Current segment index"
+        },
+        {
+            "Index": "Base + 0x05",
+            "Mnemonic": "Current Segment State",
+            "Type": "R",
+            "Access": "SEGMENT_IDLE",
+            "Default": "SEGMENT_IDLE",
+            "Description": "Current segment state"
+        },
+        {
+            "Index": "Base + 0x06",
+            "Mnemonic": "Deadband",
+            "Type": "F",
+            "Access": "0",
+            "Default": "0",
+            "Description": "Hysteresis value in process units"
+        },
+        {
+            "Index": "Base + 0x0a",
+            "Mnemonic": "Control Setpoint",
+            "Type": "F",
+            "Access": "0",
+            "Default": "0",
+            "Description": "Dynamic control setpoint in Run mode or Manual output value in Idle mode"
+        },
+        {
+            "Index": "Base + 0x0c",
+            "Mnemonic": "Proportional Gain",
+            "Type": "F",
+            "Access": "1",
+            "Default": "1",
+            "Description": "PID control proportional gain"
+        },
+        {
+            "Index": "Base + 0x0e",
+            "Mnemonic": "Integral Gain",
+            "Type": "F",
+            "Access": "0",
+            "Default": "0",
+            "Description": "PID control integral gain"
+        },
+        {
+            "Index": "Base + 0x10",
+            "Mnemonic": "Derivative Gain",
+            "Type": "F",
+            "Access": "0",
+            "Default": "0",
+            "Description": "PID control derivative gain"
+        },
+        {
+            "Index": "Base + 0x12",
+            "Mnemonic": "Control Output",
+            "Type": "F",
+            "Access": "0",
+            "Default": "0",
+            "Description": "Output power [0..100%]"
+        },
+        {
+            "Index": "Base + 0x14",
+            "Mnemonic": "Cycle Time",
+            "Type": "F",
+            "Access": "5",
+            "Default": "5",
+            "Description": "Cycle time (shared by all zones)"
+        },
+        {
+            "Index": "Base + 0x16",
+            "Mnemonic": "Autotune Control",
+            "Type": "R",
+            "Access": "DISABLE",
+            "Default": "DISABLE",
+            "Description": "Autotune control"
+        },
+        {
+            "Index": "Base + 0x17",
+            "Mnemonic": "Loop Status",
+            "Type": "R",
+            "Access": "STATUS_STOPPED",
+            "Default": "STATUS_STOPPED",
+            "Description": "Loop status"
+        },
+        {
+            "Index": "Base + 0x18",
+            "Mnemonic": "Autotune Setpoint",
+            "Type": "F",
+            "Access": "0",
+            "Default": "0",
+            "Description": "Setpoint for which autotune is performed at in process units"
+        },
+        {
+            "Index": "Base + 0x1a",
+            "Mnemonic": "Control Mode",
+            "Type": "R",
+            "Access": "STANDARD_CONTROL",
+            "Default": "STANDARD_CONTROL",
+            "Description": "Standard control or Ramp/Soak control mode"
+        },
+        {
+            "Index": "Base + 0x1b",
+            "Mnemonic": "Ramp/Soak Remaining",
+            "Type": "F",
+            "Access": "0",
+            "Default": "0",
+            "Description": "Remaining temperature toward setpoint if the segment is ramping. Or remaining soaking."
+        }
+    ],
+    "Profile Registers": [
+        {
+            "Index": "0x0200",
+            "Mnemonic": "Profile Start Time",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Profile start time in seconds"
+        },
+        {
+            "Index": "0x0202",
+            "Mnemonic": "Profile End Time",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Profile end time in seconds"
+        },
+        {
+            "Index": "0x0204",
+            "Mnemonic": "Segment 1 Start Time",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Segment 1 start time in seconds"
+        },
+        {
+            "Index": "0x0206",
+            "Mnemonic": "Segment 1 End Time",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Segment 1 end time in seconds"
+        },
+        {
+            "Index": "0x0208",
+            "Mnemonic": "Segment 2 Start Time",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Segment 2 start time in seconds"
+        },
+        {
+            "Index": "0x020a",
+            "Mnemonic": "Segment 2 End Time",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Segment 2 end time in seconds"
+        },
+        {
+            "Index": "0x020c",
+            "Mnemonic": "Segment 3 Start Time",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Segment 3 start time in seconds"
+        },
+        {
+            "Index": "0x020e",
+            "Mnemonic": "Segment 3 End Time",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Segment 3 end time in seconds"
+        },
+        {
+            "Index": "0x0210",
+            "Mnemonic": "Segment 4 Start Time",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Segment 4 start time in seconds"
+        },
+        {
+            "Index": "0x0212",
+            "Mnemonic": "Segment 4 End Time",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Segment 4 end time in seconds"
+        },
+        {
+            "Index": "0x0214",
+            "Mnemonic": "Segment 5 Start Time",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Segment 5 start time in seconds"
+        },
+        {
+            "Index": "0x0216",
+            "Mnemonic": "Segment 5 End Time",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Segment 5 end time in seconds"
+        },
+        {
+            "Index": "0x0218",
+            "Mnemonic": "Segment 6 Start Time",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Segment 6 start time in seconds"
+        },
+        {
+            "Index": "0x021a",
+            "Mnemonic": "Segment 6 End Time",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Segment 6 end time in seconds"
+        },
+        {
+            "Index": "0x021c",
+            "Mnemonic": "Segment 7 Start Time",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Segment 7 start time in seconds"
+        },
+        {
+            "Index": "0x021e",
+            "Mnemonic": "Segment 7 End Time",
+            "Type": "F",
+            "Access": "RW",
+            "Default": "0",
+            "Description": "Segment 7 end time in seconds"
+        }
+    ]
+}
