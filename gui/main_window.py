@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QMainWindow
 from .zone_tab import ZoneTab
 from controllers.controller import TemperatureController
 
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -13,11 +14,12 @@ class MainWindow(QMainWindow):
         # Custom zone names for each device
         zone_names_dict = {
             1: ["Chamber 1", "Chamber 2", "Chamber 3", "Chamber 4", "Chamber 5", "Chamber 6"],
-            2: ["Zone B1", "Zone B2", "Zone B3", "Zone B4", "Zone B5", "Zone B6"],
-            3: ["Zone C1", "Zone C2", "Zone C3", "Zone C4", "Zone C5", "Zone C6"]
+            2: ["THB", "CB", "DHB", "BTY", "EG", "MPD"],
+            3: ["SH1 - C1 and C2", "SH1 - C3 and C4", "SH1 - C5 and C6", "SH2 - C1 and C2", "SH2 - C3 and C4",
+                "SH2 - C5 and C6"]
         }
 
-        decimal_points = 2  # Set the desired number of decimal points
+        decimal_points = 0  # Set the desired number of decimal points
 
         self.controller = TemperatureController(port, device_ids)
 

@@ -22,6 +22,9 @@ class ZoneWidget(QWidget):
 
         self.setLayout(self.layout)
 
+        # Read the temperatures immediately
+        self.update_temperatures()
+
         # Set up a timer to update the temperatures every 5 seconds
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_temperatures)
