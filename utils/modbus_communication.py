@@ -4,7 +4,8 @@ import os
 
 
 class ModbusCommunication:
-    def __init__(self, port, baudrate=115200, device_ids=[1, 2, 3], json_file='OMEGA_CN616A_Registers.json'):
+    def __init__(self, port='COM5', baudrate=115200, device_ids=[1, 2, 3],
+                 json_file='OMEGA_CN616A_Registers_Corrected.json'):
         self.devices = {}
         self.load_registers(json_file)
         for device_id in device_ids:
@@ -18,6 +19,7 @@ class ModbusCommunication:
             raise FileNotFoundError(f"JSON file '{json_file}' not found.")
         with open(json_file, 'r') as file:
             self.registers = json.load(file)
+        print(f"Loaded registers: {self.registers.keys()}")  # Debugging output
 
     def read_register(self, device_id, register_name, register_type):
         register_info = self.registers.get(register_type)
@@ -44,6 +46,8 @@ class ModbusCommunication:
         raise ValueError(f"Register '{register_name}' not found in '{register_type}'.")
 
     def enable_all_zones(self, device_id):
+        if 'Zone Registers Table' not in self.registers:
+            raise ValueError("Register type 'Zone Registers Table' not found in the JSON file.")
         for zone in range(1, 7):  # Assuming there are 6 zones
             register_name = f'Zone {zone} Enable'
             try:

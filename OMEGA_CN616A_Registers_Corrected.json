@@ -1,0 +1,52 @@
+{
+    "Zone Registers Table": [
+        {
+            "Index": "0x200",
+            "Mnemonic": "Zone 1 Enable",
+            "Type": "RW",
+            "Access": "RW",
+            "Default": 0,
+            "Description": "Enable Zone 1"
+        },
+        {
+            "Index": "0x280",
+            "Mnemonic": "Zone 2 Enable",
+            "Type": "RW",
+            "Access": "RW",
+            "Default": 0,
+            "Description": "Enable Zone 2"
+        },
+        {
+            "Index": "0x300",
+            "Mnemonic": "Zone 3 Enable",
+            "Type": "RW",
+            "Access": "RW",
+            "Default": 0,
+            "Description": "Enable Zone 3"
+        },
+        {
+            "Index": "0x380",
+            "Mnemonic": "Zone 4 Enable",
+            "Type": "RW",
+            "Access": "RW",
+            "Default": 0,
+            "Description": "Enable Zone 4"
+        },
+        {
+            "Index": "0x400",
+            "Mnemonic": "Zone 5 Enable",
+            "Type": "RW",
+            "Access": "RW",
+            "Default": 0,
+            "Description": "Enable Zone 5"
+        },
+        {
+            "Index": "0x480",
+            "Mnemonic": "Zone 6 Enable",
+            "Type": "RW",
+            "Access": "RW",
+            "Default": 0,
+            "Description": "Enable Zone 6"
+        }
+    ]
+}
