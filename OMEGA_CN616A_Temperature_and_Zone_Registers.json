@@ -1,0 +1,150 @@
+{
+    "Temperature Registers Table": [
+        {
+            "Index": "0x0100",
+            "Mnemonic": "Temperature Zone 1",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 1 Process Value"
+        },
+        {
+            "Index": "0x0102",
+            "Mnemonic": "Temperature Zone 2",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 2 Process Value"
+        },
+        {
+            "Index": "0x0104",
+            "Mnemonic": "Temperature Zone 3",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 3 Process Value"
+        },
+        {
+            "Index": "0x0106",
+            "Mnemonic": "Temperature Zone 4",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 4 Process Value"
+        },
+        {
+            "Index": "0x0108",
+            "Mnemonic": "Temperature Zone 5",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 5 Process Value"
+        },
+        {
+            "Index": "0x010a",
+            "Mnemonic": "Temperature Zone 6",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 6 Process Value"
+        },
+        {
+            "Index": "0x010c",
+            "Mnemonic": "Temperature Zone 7",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 7 Process Value"
+        },
+        {
+            "Index": "0x010e",
+            "Mnemonic": "Temperature Zone 8",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 8 Process Value"
+        },
+        {
+            "Index": "0x0110",
+            "Mnemonic": "Temperature Zone 9",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 9 Process Value"
+        },
+        {
+            "Index": "0x0112",
+            "Mnemonic": "Temperature Zone 10",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 10 Process Value"
+        },
+        {
+            "Index": "0x0114",
+            "Mnemonic": "Temperature Zone 11",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 11 Process Value"
+        },
+        {
+            "Index": "0x0116",
+            "Mnemonic": "Temperature Zone 12",
+            "Type": "F",
+            "Access": "R",
+            "Default": "---",
+            "Description": "Zone 12 Process Value"
+        }
+    ],
+    "Zone Registers Table": [
+        {
+            "Index": "0x0200",
+            "Mnemonic": "Zone 1 Enable",
+            "Type": "RW",
+            "Access": "RW",
+            "Default": 0,
+            "Description": "Enable Zone 1"
+        },
+        {
+            "Index": "0x0280",
+            "Mnemonic": "Zone 2 Enable",
+            "Type": "RW",
+            "Access": "RW",
+            "Default": 0,
+            "Description": "Enable Zone 2"
+        },
+        {
+            "Index": "0x0300",
+            "Mnemonic": "Zone 3 Enable",
+            "Type": "RW",
+            "Access": "RW",
+            "Default": 0,
+            "Description": "Enable Zone 3"
+        },
+        {
+            "Index": "0x0380",
+            "Mnemonic": "Zone 4 Enable",
+            "Type": "RW",
+            "Access": "RW",
+            "Default": 0,
+            "Description": "Enable Zone 4"
+        },
+        {
+            "Index": "0x0400",
+            "Mnemonic": "Zone 5 Enable",
+            "Type": "RW",
+            "Access": "RW",
+            "Default": 0,
+            "Description": "Enable Zone 5"
+        },
+        {
+            "Index": "0x0480",
+            "Mnemonic": "Zone 6 Enable",
+            "Type": "RW",
+            "Access": "RW",
+            "Default": 0,
+            "Description": "Enable Zone 6"
+        }
+    ]
+}

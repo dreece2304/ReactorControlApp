@@ -28,7 +28,7 @@ class ModbusCommunication:
 
         for reg in register_info:
             if reg['Mnemonic'] == register_name:
-                register_address = int(reg['Index'], 16) + 1  # Adjust index for Modbus
+                register_address = int(reg['Index'], 16)  # Adjust index for Modbus
                 self.devices[device_id].write_register(register_address, value,
                                                        functioncode=6)  # Use function code 6 for writing a single register
                 return
