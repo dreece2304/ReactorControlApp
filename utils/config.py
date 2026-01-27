@@ -2,23 +2,54 @@
 import configparser
 import os
 import sys
+import shutil
 
 
-def get_base_path():
-    """Get base path for resources (handles PyInstaller frozen exe)."""
+def get_bundled_path():
+    """Get path to bundled resources (inside exe or project root)."""
     if getattr(sys, 'frozen', False):
-        # Running as PyInstaller bundle
         return sys._MEIPASS
     else:
-        # Running as script
         return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-# Default config file path (relative to project root or exe location)
-DEFAULT_CONFIG_FILE = os.path.join(
-    get_base_path(),
-    'config.ini'
-)
+def get_writable_config_path():
+    """
+    Get writable config path.
+
+    For frozen exe: Uses folder next to the exe
+    For script: Uses project root
+    """
+    if getattr(sys, 'frozen', False):
+        # Put config next to the exe (writable location)
+        exe_dir = os.path.dirname(sys.executable)
+        return os.path.join(exe_dir, 'config.ini')
+    else:
+        return os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            'config.ini'
+        )
+
+
+def ensure_config_exists():
+    """
+    Ensure config.ini exists in writable location.
+
+    For frozen exe: Copies bundled config to exe directory if not present.
+    """
+    writable_path = get_writable_config_path()
+
+    if not os.path.exists(writable_path):
+        # Copy from bundled location
+        bundled_path = os.path.join(get_bundled_path(), 'config.ini')
+        if os.path.exists(bundled_path):
+            shutil.copy(bundled_path, writable_path)
+
+    return writable_path
+
+
+# Default config file path
+DEFAULT_CONFIG_FILE = ensure_config_exists()
 
 
 class Config:
