@@ -1,10 +1,22 @@
 """Configuration loader for ReactorControlApp."""
 import configparser
 import os
+import sys
 
-# Default config file path (relative to project root)
+
+def get_base_path():
+    """Get base path for resources (handles PyInstaller frozen exe)."""
+    if getattr(sys, 'frozen', False):
+        # Running as PyInstaller bundle
+        return sys._MEIPASS
+    else:
+        # Running as script
+        return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+# Default config file path (relative to project root or exe location)
 DEFAULT_CONFIG_FILE = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    get_base_path(),
     'config.ini'
 )
 

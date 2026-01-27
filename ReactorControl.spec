@@ -10,6 +10,7 @@ a = Analysis(
     binaries=[],
     datas=[
         ('config.ini', '.'),  # Include config file
+        ('OMEGA_CN616A_Registers.json', '.'),  # Include register config
     ],
     hiddenimports=[
         'PySide6.QtCore',

@@ -1,14 +1,26 @@
 import minimalmodbus
 import json
 import os
+import sys
 import struct
 import logging
 
 logger = logging.getLogger(__name__)
 
-# Default path to register configuration file (relative to this module)
+
+def get_base_path():
+    """Get base path for resources (handles PyInstaller frozen exe)."""
+    if getattr(sys, 'frozen', False):
+        # Running as PyInstaller bundle
+        return sys._MEIPASS
+    else:
+        # Running as script
+        return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+# Default path to register configuration file
 DEFAULT_REGISTER_FILE = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    get_base_path(),
     'OMEGA_CN616A_Registers.json'
 )
 
