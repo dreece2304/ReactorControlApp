@@ -1,5 +1,5 @@
 import unittest
-from PyQt5.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication
 from gui.main_window import MainWindow
 
 class TestMainWindow(unittest.TestCase):

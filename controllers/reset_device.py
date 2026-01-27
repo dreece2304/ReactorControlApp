@@ -1,53 +1,56 @@
-import minimalmodbus
-import json
-import os
+"""
+Utility script to reset OMEGA CN616A device to factory defaults.
+
+Usage:
+    python -m controllers.reset_device [--port PORT] [--device-id ID]
+"""
+import argparse
+import logging
+import sys
+
+from utils.modbus_communication import ModbusCommunication
+
+logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+logger = logging.getLogger(__name__)
 
 
-class ModbusCommunication:
-    def __init__(self, port='COM5', baudrate=115200, device_ids=[1],
-                 json_file='C:/Users/bergsman_lab_admin/PycharmProjects/ReactorControlApp/OMEGA_CN616A_Registers.json'):
-        self.devices = {}
-        self.load_registers(json_file)
-        for device_id in device_ids:
-            instrument = minimalmodbus.Instrument(port, device_id)
-            instrument.serial.baudrate = baudrate
-            instrument.serial.timeout = 1
-            self.devices[device_id] = instrument
+def reset_device_to_factory_default(port='COM5', device_id=1, json_file=None):
+    """
+    Reset a device to factory defaults.
 
-    def load_registers(self, json_file):
-        if not os.path.exists(json_file):
-            raise FileNotFoundError(f"JSON file '{json_file}' not found.")
-        with open(json_file, 'r') as file:
-            self.registers = json.load(file)
-        print(f"Loaded registers: {self.registers.keys()}")  # Debugging output
-
-    def write_register(self, device_id, register_name, register_type, value):
-        register_info = self.registers.get(register_type)
-        if not register_info:
-            raise ValueError(f"Register type '{register_type}' not found in the JSON file.")
-
-        for reg in register_info:
-            if reg['Mnemonic'] == register_name:
-                register_address = int(reg['Index'], 16)  # Adjust index for Modbus
-                self.devices[device_id].write_register(register_address, value,
-                                                       functioncode=6)  # Use function code 6 for writing a single register
-                return
-        raise ValueError(f"Register '{register_name}' not found in '{register_type}'.")
-
-
-def reset_device_to_factory_default():
-    port = 'COM5'
-    device_id = 1
-    json_file = 'C:/Users/bergsman_lab_admin/PycharmProjects/ReactorControlApp/OMEGA_CN616A_Registers.json'
-    modbus_comm = ModbusCommunication(port=port, device_ids=[device_id], json_file=json_file)
-
-    # Reset the device to factory default
+    Args:
+        port: Serial port (e.g., 'COM5' on Windows, '/dev/ttyUSB0' on Linux)
+        device_id: Modbus device address to reset
+        json_file: Path to register configuration (uses default if None)
+    """
+    modbus_comm = None
     try:
-        modbus_comm.write_register(device_id, 'Factory Default', 'System Registers', 1)  # Assuming 1 triggers the reset
-        print(f"Device {device_id} has been reset to factory default.")
+        modbus_comm = ModbusCommunication(port=port, device_ids=[device_id], json_file=json_file)
+        modbus_comm.write_register(device_id, 'Factory Default', 'System Registers', 1)
+        logger.info(f"Device {device_id} on {port} has been reset to factory default.")
+    except FileNotFoundError as e:
+        logger.error(f"Configuration file not found: {e}")
+        sys.exit(1)
     except Exception as e:
-        print(f"Error resetting device {device_id} to factory default: {e}")
+        logger.error(f"Error resetting device {device_id} to factory default: {e}")
+        sys.exit(1)
+    finally:
+        if modbus_comm:
+            modbus_comm.close()
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Reset OMEGA CN616A device to factory defaults')
+    parser.add_argument('--port', default='COM5',
+                        help='Serial port (default: COM5)')
+    parser.add_argument('--device-id', type=int, default=1,
+                        help='Modbus device ID to reset (default: 1)')
+    parser.add_argument('--json-file', default=None,
+                        help='Path to register configuration JSON (uses default if not specified)')
+
+    args = parser.parse_args()
+    reset_device_to_factory_default(port=args.port, device_id=args.device_id, json_file=args.json_file)
 
 
 if __name__ == "__main__":
-    reset_device_to_factory_default()
+    main()

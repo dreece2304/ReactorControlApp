@@ -1,5 +1,5 @@
 import unittest
-from PyQt5.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication
 from gui.zone_widget import ZoneWidget
 from controllers.controller import TemperatureController
 
